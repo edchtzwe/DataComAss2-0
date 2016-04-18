@@ -28,6 +28,16 @@ public class UDPServer {
         }
         catch(NumberFormatException e){
             System.out.println(e.toString());
+            //exit, or we can prompt the user for a port
+            System.exit(1);
+        }
+        catch(IOException e){
+            System.out.println(e.toString());
+            //exit, or we can ask the user for a different port
+            System.exit(1);
+        }
+        finally{
+            System.out.println("Uncaught exception occured. Please quote Error code 1-1.");
             System.exit(1);
         }
         
@@ -36,8 +46,8 @@ public class UDPServer {
         
         while(true){
                 DatagramPacket getPacket = new DatagramPacket(getData, getData.length);
-                
-                serverSocket.receive(getPacket); //receive data from client
+                                
+                serverSocket.receive(getPacket); //receive data from client                
                 
                 String theString = "Hello, my name is â€¦â?â€¦â?. And my Id is â€¦â?â€¦â?"; //A response message
                 
