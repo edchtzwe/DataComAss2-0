@@ -21,7 +21,7 @@ import java.io.*;
 
 public class UDPServer {  
     static DatagramSocket serverSocket = null;
-    public static void main(String[] args) throws SocketException, IOException
+    public static void main(String[] args)
     {
         try{
             serverSocket = new DatagramSocket(Integer.parseInt(args[0])); //creates a DatagramSocket object and tie it to port 9999
@@ -46,8 +46,14 @@ public class UDPServer {
         
         while(true){
                 DatagramPacket getPacket = new DatagramPacket(getData, getData.length);
-                                
+                         
+                try{
                 serverSocket.receive(getPacket); //receive data from client                
+                }
+                catch(IOException e){
+                    System.err.println(e.toString());
+                    System.exit(1);
+                }
                 
                 String theString = "Hello, my name is â€¦â?â€¦â?. And my Id is â€¦â?â€¦â?"; //A response message
                 
@@ -56,7 +62,14 @@ public class UDPServer {
                 
                 sendData = theString.getBytes(); //convert string into byte
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAdd, portNum); //compile the to be sent data into a DatagramPacket
+                
+                try{
                 serverSocket.send(sendPacket); //send the packet
+                }
+                catch(IOException e){
+                    System.err.println(e.toString());
+                    System.exit(1);
+                }
         }
     }
 }
